@@ -1,6 +1,6 @@
 {
   "name": "aws-cron-parser",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A util to parse cron expressions used by AWS services",
   "keywords": [
     "aws",
@@ -12,7 +12,7 @@
   "author": "Vinh Tuong Nguyen",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/beem/data-platform/aws-cron-parser.git"
+    "url": "https://github.com/beemhq/aws-cron-parser.git"
   },
   "main": "awsCronParser.js",
   "scripts": {
