@@ -1,5 +1,7 @@
 # AWS Cron Parser
 
+This utility was built to process AWS Cron Expressions used by Amazon CloudWatch. It can support all the specs listed in the link below, including the special wildcards L W and #.
+
 ## Specs
 
 AWS Cron Expression specs:
@@ -14,7 +16,13 @@ There are only 2 methods: `parse` and `next`
 
 ```js
 import awsCronParser from "aws-cron-parser";
+
+// first we need to parse the cron expression
 const cron = awsCronParser.parse("9 * 7,9,11 5 ? 2020");
-let occurrence = awsCronParser.next(cron, new Date()); // to get the first occurrence from now
-occurrence = awsCronParser.next(cron, occurrence; // to get the next occurrence following the previous one
+
+// to get the first occurrence from now
+let occurrence = awsCronParser.next(cron, new Date());
+
+// to get the next occurrence following the previous one
+occurrence = awsCronParser.next(cron, occurrence;
 ```
