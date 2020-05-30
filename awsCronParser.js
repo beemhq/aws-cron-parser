@@ -136,13 +136,13 @@ const getDaysOfMonthForW = (year, month, day) => {
   return [day + [0, 1, -1, 2, -2].find((c) => isWeekday(year, month, day + c))];
 };
 
-let iter;
+let nextIterCount;
 const nextOnce = (parsed, from) => {
-  if (iter > 10)
+  if (nextIterCount > 10)
     throw new Error(
-      "AwsCronParser.next() : this shouldn't happen, but iter > 10"
+      "AwsCronParser : this shouldn't happen, but nextIterCount > 10"
     );
-  iter += 1;
+  nextIterCount += 1;
 
   const cYear = from.getUTCFullYear();
   const cMonth = from.getUTCMonth() + 1;
@@ -205,9 +205,9 @@ const nextOnce = (parsed, from) => {
  * @param {*} from the Date to start from
  */
 const next = (parsed, from) => {
-  // iter is just a safety net to prevent infinite recursive calls
+  // nextIterCount is just a safety net to prevent infinite recursive calls
   // because I'm not 100% sure this won't happen
-  iter = 0;
+  nextIterCount = 0;
   return nextOnce(parsed, from);
 };
 
