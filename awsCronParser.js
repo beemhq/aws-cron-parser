@@ -137,7 +137,7 @@ const getDaysOfMonthForW = (year, month, day) => {
 };
 
 let iter;
-const find = (parsed, from) => {
+const nextOnce = (parsed, from) => {
   if (iter > 10)
     throw new Error(
       "AwsCronParser.next() : this shouldn't happen, but iter > 10"
@@ -154,7 +154,8 @@ const find = (parsed, from) => {
   if (year === undefined) return null;
 
   const month = parsed.months.find((c) => c >= (year === cYear ? cMonth : 1));
-  if (month === undefined) return find(parsed, new Date(Date.UTC(year + 1)));
+  if (month === undefined)
+    return nextOnce(parsed, new Date(Date.UTC(year + 1)));
 
   const isSameMonth = year === cYear && month === cMonth;
 
@@ -174,19 +175,22 @@ const find = (parsed, from) => {
     (c) => c >= (isSameMonth ? cDayOfMonth : 1)
   );
   if (dayOfMonth === undefined)
-    return find(parsed, new Date(Date.UTC(year, month + 1 - 1)));
+    return nextOnce(parsed, new Date(Date.UTC(year, month + 1 - 1)));
 
   const isSameDate = isSameMonth && dayOfMonth === cDayOfMonth;
 
   const hour = parsed.hours.find((c) => c >= (isSameDate ? cHour : 0));
   if (hour === undefined)
-    return find(parsed, new Date(Date.UTC(year, month - 1, dayOfMonth + 1)));
+    return nextOnce(
+      parsed,
+      new Date(Date.UTC(year, month - 1, dayOfMonth + 1))
+    );
 
   const minute = parsed.minutes.find(
     (c) => c >= (isSameDate && hour === cHour ? cMinute + 1 : 0)
   );
   if (minute === undefined)
-    return find(
+    return nextOnce(
       parsed,
       new Date(Date.UTC(year, month - 1, dayOfMonth, hour + 1))
     );
@@ -204,7 +208,7 @@ const next = (parsed, from) => {
   // iter is just a safety net to prevent infinite recursive calls
   // because I'm not 100% sure this won't happen
   iter = 0;
-  return find(parsed, from);
+  return nextOnce(parsed, from);
 };
 
 module.exports = {

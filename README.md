@@ -18,11 +18,11 @@ There are only 2 methods: `parse` and `next`
 import awsCronParser from "aws-cron-parser";
 
 // first we need to parse the cron expression
-const cron = awsCronParser.parse("9 * 7,9,11 5 ? 2020");
+const cron = awsCronParser.parse("9 * 7,9,11 5 ? 2020,2022,2024-2099");
 
 // to get the first occurrence from now
 let occurrence = awsCronParser.next(cron, new Date());
 
 // to get the next occurrence following the previous one
-occurrence = awsCronParser.next(cron, occurrence;
+occurrence = awsCronParser.next(cron, occurrence);
 ```
