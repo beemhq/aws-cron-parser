@@ -73,8 +73,8 @@ test("should generate next & prev occurence for various crons", () => {
       "Sat, 25 Jul 2020 00:01:00 GMT",
       "Wed, 25 Mar 2020 23:58:00 GMT",
     ],
-    ["9 * 7,9,11 3,5,7 ? 2021", "Sun, 07 Mar 2021 00:09:00 GMT", undefined],
-    ["9 * 7,9,11 5 ? 2021", "Fri, 07 May 2021 00:09:00 GMT", undefined],
+    ["9 * 7,9,11 3,5,7 ? 2021", "Sun, 07 Mar 2021 00:09:00 GMT"],
+    ["9 * 7,9,11 5 ? 2021", "Fri, 07 May 2021 00:09:00 GMT"],
     [
       "9 * 7,9,11 5 ? 2020",
       "Sat, 09 May 2020 23:09:00 GMT",
@@ -162,7 +162,7 @@ test("should generate next & prev occurence for various crons", () => {
 
     occurence = AwsCronParser.next(parsed, base);
     logger.debug(cron, { label: occurence?.toUTCString() });
-    expect(occurence.toUTCString()).toBe(nextShouldBe);
+    expect(occurence?.toUTCString()).toBe(nextShouldBe);
 
     occurence = AwsCronParser.prev(parsed, base);
     logger.debug(cron, { label: occurence?.toUTCString() });
@@ -189,14 +189,14 @@ test("should generate multiple next occurences", () => {
     ],
   ];
 
-  crons.forEach(([cron, itShouldBe]) => {
+  crons.forEach(([cron, theyShouldBe]) => {
     const parsed = AwsCronParser.parse(cron);
     let occurence = new Date(Date.UTC(2020, 5 - 1, 9, 22, 30, 57));
-    for (let i = 0; i < 10; i += 1) {
+    theyShouldBe.forEach((itShouldBe, i) => {
       occurence = AwsCronParser.next(parsed, occurence);
       logger.debug(cron, { label: `${i}:${occurence?.toUTCString()}` });
-      expect(occurence.toUTCString()).toBe(itShouldBe[i]);
-    }
+      expect(occurence.toUTCString()).toBe(itShouldBe);
+    });
   });
 });
 
@@ -219,13 +219,13 @@ test("should generate multiple previous occurences", () => {
     ],
   ];
 
-  crons.forEach(([cron, itShouldBe]) => {
+  crons.forEach(([cron, theyShouldBe]) => {
     const parsed = AwsCronParser.parse(cron);
     let occurence = new Date(Date.UTC(2020, 5 - 1, 9, 22, 30, 57));
-    for (let i = 0; i < 10; i += 1) {
+    theyShouldBe.forEach((itShouldBe, i) => {
       occurence = AwsCronParser.prev(parsed, occurence);
       logger.debug(cron, { label: `${i}:${occurence?.toUTCString()}` });
-      expect(occurence.toUTCString()).toBe(itShouldBe[i]);
-    }
+      expect(occurence.toUTCString()).toBe(itShouldBe);
+    });
   });
 });
