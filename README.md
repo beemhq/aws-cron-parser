@@ -1,6 +1,7 @@
 # AWS Cron Parser
 
-[![beemhq](https://circleci.com/gh/beemhq/aws-cron-parser.svg?style=svg)](https://app.circleci.com/pipelines/github/beemhq/aws-cron-parser)
+[![circleci](https://circleci.com/gh/beemhq/aws-cron-parser.svg?style=shield)](https://app.circleci.com/pipelines/github/beemhq/aws-cron-parser)
+[![benchmark](https://img.shields.io/badge/benchmark-128%2C937%20ops%2Fsec-informational)](https://runkit.com/vinhtnguyen/aws-cron-parser---benchmark)
 
 This utility was built to process AWS Cron Expressions used by Amazon CloudWatch. It can support all the specs listed in the link below, including the special wildcards L W and #.
 
