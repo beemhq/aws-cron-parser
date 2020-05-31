@@ -1,5 +1,7 @@
 # AWS Cron Parser
 
+[![beemhq](https://circleci.com/gh/beemhq/aws-cron-parser.svg?style=svg)](https://app.circleci.com/pipelines/github/beemhq/aws-cron-parser)
+
 This utility was built to process AWS Cron Expressions used by Amazon CloudWatch. It can support all the specs listed in the link below, including the special wildcards L W and #.
 
 ## Specs
@@ -12,7 +14,7 @@ https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#
 
 ## Usage
 
-There are only 2 methods: `parse` and `next`
+There are only 3 methods: `parse`, `next`, and `prev`
 
 ```js
 import awsCronParser from "aws-cron-parser";
@@ -25,4 +27,7 @@ let occurrence = awsCronParser.next(cron, new Date());
 
 // to get the next occurrence following the previous one
 occurrence = awsCronParser.next(cron, occurrence);
+
+// and use prev to get the previous occurrence
+occurrence = awsCronParser.prev(cron, occurrence);
 ```
