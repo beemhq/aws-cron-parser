@@ -1,6 +1,7 @@
 const AwsCronParser = require("./awsCronParser");
 
 const logger = {
+  // eslint-disable-next-line no-console
   debug: (s, o) => console.log(`[${o.label}] ${s}`),
 };
 
