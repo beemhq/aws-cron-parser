@@ -8,9 +8,7 @@ This utility was built to process AWS Cron Expressions used by Amazon CloudWatch
 
 ## Specs
 
-AWS Cron Expression specs:
-
-<https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions>
+[AWS Cron Expression specs](https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions)
 
 ## Usage
 
