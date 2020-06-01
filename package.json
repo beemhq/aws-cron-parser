@@ -1,6 +1,6 @@
 {
   "name": "aws-cron-parser",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A util to parse cron expressions used by AWS services",
   "keywords": [
     "aws",
@@ -15,10 +15,16 @@
     "url": "https://github.com/beemhq/aws-cron-parser.git"
   },
   "main": "awsCronParser.js",
+  "files": [
+    "awsCronParser.js",
+    "lib/*"
+  ],
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "benchmark": "node benchmark.js"
   },
   "devDependencies": {
+    "benchmark": "^2.1.4",
     "jest": "^26.0.1"
   }
 }
