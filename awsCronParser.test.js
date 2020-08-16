@@ -13,7 +13,7 @@ const arr = (s, e) => {
   return rs;
 };
 
-test("should parse AWS cron expressions", () => {
+test("should parse AWS cron expressions #1", () => {
   let p;
 
   p = AwsCronParser.parse("6 4/3 8,18-20,26-28 * ? 2020-2030");
@@ -61,6 +61,19 @@ test("should parse AWS cron expressions", () => {
     2161,
     2181,
   ]);
+});
+
+test("should parse AWS cron expressions #2", () => {
+  let p;
+
+  p = AwsCronParser.parse("15 10 ? * 6L 2002-2025");
+  logger.debug(JSON.stringify(p), { label: "cron 1" });
+  expect(p.minutes).toEqual([15]);
+  expect(p.hours).toEqual([10]);
+  expect(p.daysOfMonth).toBeNull();
+  expect(p.months).toEqual(arr(1, 12));
+  expect(p.daysOfWeek).toEqual(["L", 6]);
+  expect(p.years).toEqual(arr(2002, 2025));
 });
 
 test("should generate next & prev occurence for various crons", () => {
@@ -171,7 +184,7 @@ test("should generate next & prev occurence for various crons", () => {
   });
 });
 
-test("should generate multiple next occurences", () => {
+test("should generate multiple next occurences #1", () => {
   const crons = [
     [
       "23,24,25 17,18 25 MAR/4 ? 2020,2021,2023,2028",
@@ -186,6 +199,36 @@ test("should generate multiple next occurences", () => {
         "Wed, 25 Nov 2020 17:24:00 GMT",
         "Wed, 25 Nov 2020 17:25:00 GMT",
         "Wed, 25 Nov 2020 18:23:00 GMT",
+      ],
+    ],
+  ];
+
+  crons.forEach(([cron, theyShouldBe]) => {
+    const parsed = AwsCronParser.parse(cron);
+    let occurence = new Date(Date.UTC(2020, 5 - 1, 9, 22, 30, 57));
+    theyShouldBe.forEach((itShouldBe, i) => {
+      occurence = AwsCronParser.next(parsed, occurence);
+      logger.debug(cron, { label: `${i}:${occurence?.toUTCString()}` });
+      expect(occurence.toUTCString()).toBe(itShouldBe);
+    });
+  });
+});
+
+test("should generate multiple next occurences #2", () => {
+  const crons = [
+    [
+      "15 10 ? * 6L 2002-2025",
+      [
+        "Fri, 29 May 2020 10:15:00 GMT",
+        "Fri, 26 Jun 2020 10:15:00 GMT",
+        "Fri, 31 Jul 2020 10:15:00 GMT",
+        "Fri, 28 Aug 2020 10:15:00 GMT",
+        "Fri, 25 Sep 2020 10:15:00 GMT",
+        "Fri, 30 Oct 2020 10:15:00 GMT",
+        "Fri, 27 Nov 2020 10:15:00 GMT",
+        "Fri, 25 Dec 2020 10:15:00 GMT",
+        "Fri, 29 Jan 2021 10:15:00 GMT",
+        "Fri, 26 Feb 2021 10:15:00 GMT",
       ],
     ],
   ];
