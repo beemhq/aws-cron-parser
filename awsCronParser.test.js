@@ -76,6 +76,19 @@ test("should parse AWS cron expressions #2", () => {
   expect(p.years).toEqual(arr(2002, 2025));
 });
 
+test("should parse AWS cron expression #3", () => {
+  let p;
+
+  p = AwsCronParser.parse("*/5 10 ? * MON-FRI *")
+  logger.debug(JSON.stringify(p), { label: "cron 1" });
+  expect(p.minutes).toEqual([0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55]);
+  expect(p.hours).toEqual([10]);
+  expect(p.daysOfMonth).toBeNull();
+  expect(p.months).toEqual(arr(1, 12));
+  expect(p.daysOfWeek).toEqual(arr(2, 6));
+  expect(p.years).toEqual(arr(1970, 2199));
+})
+
 test("should generate next & prev occurence for various crons", () => {
   let occurence;
 
