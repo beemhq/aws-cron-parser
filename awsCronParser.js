@@ -7,4 +7,5 @@ module.exports = {
   ...require("./lib/parse"),
   ...require("./lib/next"),
   ...require("./lib/prev"),
+  ...require("./lib/desc"),
 };
