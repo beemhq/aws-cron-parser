@@ -10,8 +10,9 @@ jobs:
             - node/with-cache:
                   steps:
                       - run: npm install
-                      - run: npx tsc
-                      - run: npm test
+                      - run: npm install typescript --save-dev
+                      - run: npm run tsc
+                      - run: npm run test
 workflows:
     build-and-test:
         jobs:
