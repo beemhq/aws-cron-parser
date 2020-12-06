@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "outDir": "./built",
+        "target": "es5",
+        "module": "commonjs",
+        "sourceMap": true,
+        "baseUrl": ".",
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
+        "forceConsistentCasingInFileNames": true,
+        "noImplicitReturns": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "noUnusedLocals": true,
+        "allowJs": true,
+        "skipLibCheck": true,
+        "experimentalDecorators": true,
+        "strict": true,
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    },
+    "include": ["./src/**/*"]
+}

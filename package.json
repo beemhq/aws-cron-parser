@@ -1,33 +1,54 @@
 {
-  "name": "aws-cron-parser",
-  "version": "1.1.5",
-  "description": "A util to parse cron expressions used by AWS services",
-  "keywords": [
-    "aws",
-    "cloudwatch",
-    "cron",
-    "parser"
-  ],
-  "license": "MIT",
-  "author": "Vinh Tuong Nguyen",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/beemhq/aws-cron-parser.git"
-  },
-  "main": "awsCronParser.js",
-  "files": [
-    "awsCronParser.js",
-    "lib/*"
-  ],
-  "scripts": {
-    "test": "jest",
-    "benchmark": "node benchmark.js"
-  },
-  "devDependencies": {
-    "benchmark": "^2.1.4",
-    "jest": "^26.4.0"
-  },
-  "dependencies": {
-    "number-to-words": "^1.2.4"
-  }
+    "name": "aws-cron-parser",
+    "version": "1.1.5",
+    "description": "A util to parse cron expressions used by AWS services",
+    "keywords": [
+        "aws",
+        "cloudwatch",
+        "cron",
+        "parser"
+    ],
+    "license": "MIT",
+    "author": "Vinh Tuong Nguyen",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/beemhq/aws-cron-parser.git"
+    },
+    "type": "module",
+    "main": "built/index.js",
+    "files": [
+        "built/index.js",
+        "built/lib/*"
+    ],
+    "scripts": {
+        "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+        "test": "jest built/tests/**",
+        "benchmark": "node built/benchmark.js"
+    },
+    "dependencies": {
+        "number-to-words": "^1.2.4"
+    },
+    "devDependencies": {
+        "@types/benchmark": "^2.1.0",
+        "@types/jest": "^26.0.16",
+        "@types/number-to-words": "^1.2.0",
+        "@typescript-eslint/eslint-plugin": "^4.9.0",
+        "@typescript-eslint/parser": "^4.9.0",
+        "benchmark": "^2.1.4",
+        "eslint": "^7.15.0",
+        "eslint-config-prettier": "^7.0.0",
+        "eslint-plugin-prettier": "^3.2.0",
+        "jest": "^26.4.0",
+        "prettier": "^2.2.1"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.{js,ts,tsx}": [
+            "eslint --fix"
+        ]
+    }
 }
