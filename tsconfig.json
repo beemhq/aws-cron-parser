@@ -15,6 +15,7 @@
         "skipLibCheck": true,
         "experimentalDecorators": true,
         "strict": true,
+        "declaration": true,
         "paths": {
             "@/*": ["./src/*"]
         }

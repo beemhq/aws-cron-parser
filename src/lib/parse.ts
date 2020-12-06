@@ -91,7 +91,7 @@ const dayWeekReplaces = [
     ['SAT', '7'],
 ];
 
-export const parse = (cron: string): ParsedCron => {
+export function parse(cron: string): ParsedCron {
     const rules = cron.split(' ');
 
     return {
@@ -102,4 +102,4 @@ export const parse = (cron: string): ParsedCron => {
         daysOfWeek: parseOneRule(replace(rules[4], dayWeekReplaces), 1, 7),
         years: parseOneRule(rules[5], 1970, 2199),
     };
-};
+}

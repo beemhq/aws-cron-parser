@@ -75,7 +75,7 @@ const handleDaysOfWeek = (p: ParsedCron) => {
 /**
  * @param {*} p the value returned by "parse" function of this module
  */
-export const getScheduleDescription = (p: ParsedCron) => {
+export function getScheduleDescription(p: ParsedCron) {
     let desc = '';
 
     const perDay = p.minutes.length * p.hours.length;
@@ -86,4 +86,4 @@ export const getScheduleDescription = (p: ParsedCron) => {
     else if (p.daysOfWeek.length > 0) desc += handleDaysOfWeek(p);
 
     return desc;
-};
+}

@@ -1,6 +1,6 @@
 {
     "name": "aws-cron-parser",
-    "version": "1.1.5",
+    "version": "1.1.6",
     "description": "A util to parse cron expressions used by AWS services",
     "keywords": [
         "aws",
@@ -16,13 +16,15 @@
     },
     "type": "module",
     "main": "built/index.js",
+    "types": "built/index.d.ts",
     "files": [
-        "built/index.js",
+        "built/index*",
         "built/lib/*"
     ],
     "scripts": {
         "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
         "test": "jest built/tests/**",
+        "prepublishOnly": "tsc",
         "benchmark": "node built/benchmark.js"
     },
     "dependencies": {
