@@ -23,6 +23,7 @@
     ],
     "scripts": {
         "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+        "tsc": "tsc",
         "test": "jest built/tests/**",
         "prepublishOnly": "tsc",
         "benchmark": "node built/benchmark.js"
