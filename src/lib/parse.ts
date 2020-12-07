@@ -31,7 +31,7 @@ const parseOneRule = (rule: string, min: number, max: number): ParsedRule => {
         newRule = `${min}-${max}`;
     } else if (rule.includes('/')) {
         const parts = rule.split('/');
-        if (parts[0] === '*') parts[0] = '0';
+        if (parts[0] === '*') parts[0] = min.toString();
         let start = parseInt(parts[0], 10);
         const increment = parseInt(parts[1], 10);
         newRule = '';
@@ -59,7 +59,7 @@ const parseOneRule = (rule: string, min: number, max: number): ParsedRule => {
 };
 
 const replace = (s: string, rules: string[][]) => {
-    let rs = s;
+    let rs = s.toUpperCase();
     rules.forEach(([from, to]) => {
         rs = rs.replace(from, to);
     });
