@@ -92,3 +92,14 @@ test('should parse AWS cron expression #5', () => {
     expect(p.daysOfWeek).toEqual([1, 2]);
     expect(p.years).toEqual(arr(1970, 2199));
 });
+
+test('parse-6', () => {
+    const p = AwsCronParser.parse('10 7/5 7 * ? 2020');
+    logger.debug(JSON.stringify(p), { label: 'cron 1' });
+    expect(p.minutes).toEqual([10]);
+    expect(p.hours).toEqual(arr(7, 22, 5));
+    expect(p.daysOfMonth).toEqual([7]);
+    expect(p.months).toEqual(arr(1, 12));
+    expect(p.daysOfWeek).toEqual([]);
+    expect(p.years).toEqual([2020]);
+});

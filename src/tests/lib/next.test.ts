@@ -108,3 +108,27 @@ test('should generate multiple next occurences #4', () => {
         });
     });
 });
+
+test('next-6', () => {
+    const crons: { cron: string; should: string[] }[] = [
+        {
+            cron: '10 7/5 7 * ? 2020,2021',
+            should: [
+                'Mon, 07 Dec 2020 17:10:00 GMT',
+                'Mon, 07 Dec 2020 22:10:00 GMT',
+                'Thu, 07 Jan 2021 07:10:00 GMT',
+                'Thu, 07 Jan 2021 12:10:00 GMT',
+            ],
+        },
+    ];
+
+    crons.forEach(({ cron, should: theyShouldBe }) => {
+        const parsed = AwsCronParser.parse(cron);
+        let occurence = new Date(Date.UTC(2020, 12 - 1, 7, 15, 57, 37));
+        theyShouldBe.forEach((itShouldBe, i) => {
+            occurence = AwsCronParser.next(parsed, occurence) || new Date(0);
+            logger.debug(cron, { label: `${i}:${occurence?.toUTCString()}` });
+            expect(occurence.toUTCString()).toBe(itShouldBe);
+        });
+    });
+});
