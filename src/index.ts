@@ -8,4 +8,4 @@ import * as desc from './lib/desc';
  * AWS Cron Expression specs
  * https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions
  */
-export default { ...parse, ...next, ...prev, ...desc };
+export = { ...parse, ...next, ...prev, ...desc };

@@ -3,19 +3,18 @@
         "outDir": "./built",
         "target": "es5",
         "module": "commonjs",
-        "sourceMap": true,
+        "esModuleInterop": true,
         "baseUrl": ".",
-        "allowSyntheticDefaultImports": true,
         "moduleResolution": "node",
+        "sourceMap": true,
+        "declaration": true,
+        "strict": true,
         "forceConsistentCasingInFileNames": true,
         "noImplicitReturns": true,
         "suppressImplicitAnyIndexErrors": true,
         "noUnusedLocals": true,
-        "allowJs": true,
         "skipLibCheck": true,
         "experimentalDecorators": true,
-        "strict": true,
-        "declaration": true,
         "paths": {
             "@/*": ["./src/*"]
         }

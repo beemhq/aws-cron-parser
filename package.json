@@ -1,6 +1,6 @@
 {
     "name": "aws-cron-parser",
-    "version": "1.1.7",
+    "version": "1.1.8",
     "description": "A util to parse cron expressions used by AWS services",
     "keywords": [
         "aws",
@@ -14,7 +14,7 @@
         "type": "git",
         "url": "https://github.com/beemhq/aws-cron-parser.git"
     },
-    "type": "module",
+    "type": "commonjs",
     "main": "built/index.js",
     "types": "built/index.d.ts",
     "files": [
