@@ -31,11 +31,21 @@ const parseOneRule = (rule: string, min: number, max: number): ParsedRule => {
         newRule = `${min}-${max}`;
     } else if (rule.includes('/')) {
         const parts = rule.split('/');
-        if (parts[0] === '*') parts[0] = min.toString();
-        let start = parseInt(parts[0], 10);
+        let start, end;
+        if (parts[0] === '*') {
+            start = min;
+            end = max;
+        } else if (parts[0].includes('-')) {
+            const splits = parts[0].split('-');
+            start = parseInt(splits[0], 10);
+            end = parseInt(splits[1], 10);
+        } else {
+            start = parseInt(parts[0], 10);
+            end = max;
+        }
         const increment = parseInt(parts[1], 10);
         newRule = '';
-        while (start <= max) {
+        while (start <= end) {
             newRule += `,${start}`;
             start += increment;
         }

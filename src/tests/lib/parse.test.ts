@@ -103,3 +103,14 @@ test('parse-6', () => {
     expect(p.daysOfWeek).toEqual([]);
     expect(p.years).toEqual([2020]);
 });
+
+test('parse-7', () => {
+    const p = AwsCronParser.parse('0-29/5 22 09 05 ? 2020');
+    logger.debug(JSON.stringify(p), { label: 'cron 1' });
+    expect(p.minutes).toEqual(arr(0, 25, 5));
+    expect(p.hours).toEqual([22]);
+    expect(p.daysOfMonth).toEqual([9]);
+    expect(p.months).toEqual([5]);
+    expect(p.daysOfWeek).toEqual([]);
+    expect(p.years).toEqual([2020]);
+});

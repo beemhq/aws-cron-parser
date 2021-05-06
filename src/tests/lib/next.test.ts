@@ -132,3 +132,35 @@ test('next-6', () => {
         });
     });
 });
+
+test('next-7', () => {
+    const crons: { cron: string; should: string[] }[] = [
+        {
+            cron: '0-29/5 22 09 05 ? 2020,2021,2022',
+            should: [
+                'Sun, 09 May 2021 22:00:00 GMT',
+                'Sun, 09 May 2021 22:05:00 GMT',
+                'Sun, 09 May 2021 22:10:00 GMT',
+                'Sun, 09 May 2021 22:15:00 GMT',
+                'Sun, 09 May 2021 22:20:00 GMT',
+                'Sun, 09 May 2021 22:25:00 GMT',
+                'Mon, 09 May 2022 22:00:00 GMT',
+                'Mon, 09 May 2022 22:05:00 GMT',
+                'Mon, 09 May 2022 22:10:00 GMT',
+                'Mon, 09 May 2022 22:15:00 GMT',
+                'Mon, 09 May 2022 22:20:00 GMT',
+                'Mon, 09 May 2022 22:25:00 GMT',
+            ],
+        },
+    ];
+
+    crons.forEach(({ cron, should: theyShouldBe }) => {
+        const parsed = AwsCronParser.parse(cron);
+        let occurence = new Date(Date.UTC(2020, 5 - 1, 9, 22, 30, 57));
+        theyShouldBe.forEach((itShouldBe, i) => {
+            occurence = AwsCronParser.next(parsed, occurence) || new Date(0);
+            logger.debug(cron, { label: `${i}:${occurence?.toUTCString()}` });
+            expect(occurence.toUTCString()).toBe(itShouldBe);
+        });
+    });
+});
