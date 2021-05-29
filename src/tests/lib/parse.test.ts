@@ -1,7 +1,7 @@
 import AwsCronParser from '../..';
 import { logger } from '../logger';
 
-const arr = (s: number, e: number, step: number = 1) => {
+const arr = (s: number, e: number, step = 1) => {
     const rs = [];
     for (let i = s; i <= e; i += step) {
         rs.push(i);
@@ -113,4 +113,15 @@ test('parse-7', () => {
     expect(p.months).toEqual([5]);
     expect(p.daysOfWeek).toEqual([]);
     expect(p.years).toEqual([2020]);
+});
+
+test('parse-8', () => {
+    const p = AwsCronParser.parse('30 9 L-2 * ? *');
+    logger.debug(JSON.stringify(p), { label: 'cron 1' });
+    expect(p.minutes).toEqual([30]);
+    expect(p.hours).toEqual([9]);
+    expect(p.daysOfMonth).toEqual(['L', 2]);
+    expect(p.months).toEqual(arr(1, 12));
+    expect(p.daysOfWeek).toEqual([]);
+    expect(p.years).toEqual(arr(1970, 2199));
 });

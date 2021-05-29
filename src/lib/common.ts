@@ -41,11 +41,11 @@ export const getDaysOfMonthFromDaysOfWeek = (year: number, month: number, daysOf
     return daysOfMonth;
 };
 
-export const getDaysOfMonthForL = (year: number, month: number): number[] => {
+export const getDaysOfMonthForL = (year: number, month: number, daysBefore: number): number[] => {
     for (let i = 31; i >= 28; i -= 1) {
         const thisDate = new Date(year, month - 1, i);
         if (thisDate.getMonth() === month - 1) {
-            return [i];
+            return [i - daysBefore];
         }
     }
     throw new Error('getDaysOfMonthForL - should not happen');

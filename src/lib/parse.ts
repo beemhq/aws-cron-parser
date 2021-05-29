@@ -14,7 +14,10 @@ const parseOneRule = (rule: string, min: number, max: number): ParsedRule => {
         return [];
     }
     if (rule === 'L') {
-        return ['L'];
+        return ['L', 0];
+    }
+    if (rule.startsWith('L-')) {
+        return ['L', parseInt(rule.substring(2), 10)];
     }
     if (rule.endsWith('L')) {
         return ['L', parseInt(rule.substring(0, rule.length - 1), 10)];

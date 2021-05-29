@@ -164,3 +164,30 @@ test('next-7', () => {
         });
     });
 });
+
+test('next-8', () => {
+    const crons: { cron: string; should: string[] }[] = [
+        {
+            cron: '30 9 L-2 * ? *',
+            should: [
+                'Fri, 29 May 2020 09:30:00 GMT',
+                'Sun, 28 Jun 2020 09:30:00 GMT',
+                'Wed, 29 Jul 2020 09:30:00 GMT',
+                'Sat, 29 Aug 2020 09:30:00 GMT',
+                'Mon, 28 Sep 2020 09:30:00 GMT',
+                'Thu, 29 Oct 2020 09:30:00 GMT',
+                'Sat, 28 Nov 2020 09:30:00 GMT',
+            ],
+        },
+    ];
+
+    crons.forEach(({ cron, should: theyShouldBe }) => {
+        const parsed = AwsCronParser.parse(cron);
+        let occurence = new Date(Date.UTC(2020, 5 - 1, 9, 22, 30, 57));
+        theyShouldBe.forEach((itShouldBe, i) => {
+            occurence = AwsCronParser.next(parsed, occurence) || new Date(0);
+            logger.debug(cron, { label: `${i}:${occurence?.toUTCString()}` });
+            expect(occurence.toUTCString()).toBe(itShouldBe);
+        });
+    });
+});
