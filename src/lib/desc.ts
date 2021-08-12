@@ -62,20 +62,28 @@ const handleDaysOfMonth = (p: ParsedCron) => {
 
 const handleDaysOfWeek = (p: ParsedCron) => {
     if (checkCurrentlyUnsupported(p)) return '';
-    // N N ? * MON * = every week
+    // N N ? * MON * = every Monday
     // N N ? * MON,FRI * = every Monday and Friday
     // N N ? 4,5 MON,FRI * = every Monday and Friday in April and May
     let desc = '';
-    if (p.daysOfWeek.length === 1) desc += 'every week';
-    else desc += `every ${joinMultipleWords((p.daysOfWeek as number[]).map(weekdayNumberToWord))}`;
+    desc += `every ${joinMultipleWords((p.daysOfWeek as number[]).map(weekdayNumberToWord))}`;
     if (p.months.length < 12) desc += ` in ${joinMultipleWords((p.months as number[]).map(monthNumberToWord))}`;
     return desc;
+};
+
+const handleOncePerDay = (p: ParsedCron) => {
+    const { hours, minutes } = p;
+    const h = +hours[0] % 12 || 12;
+    const m = +minutes[0];
+    const mm = m < 10 ? `0${m}` : `${m}`;
+    const am = +hours[0] < 12 ? 'AM' : 'PM';
+    return `${h}:${mm} ${am}`;
 };
 
 /**
  * @param {*} p the value returned by "parse" function of this module
  */
-export function getScheduleDescription(p: ParsedCron) {
+export function getScheduleDescription(p: ParsedCron): string {
     let desc = '';
 
     const perDay = p.minutes.length * p.hours.length;
@@ -84,6 +92,8 @@ export function getScheduleDescription(p: ParsedCron) {
 
     if (p.daysOfMonth.length > 0) desc += handleDaysOfMonth(p);
     else if (p.daysOfWeek.length > 0) desc += handleDaysOfWeek(p);
+
+    if (perDay === 1) desc += ` at ${handleOncePerDay(p)}`;
 
     return desc;
 }
