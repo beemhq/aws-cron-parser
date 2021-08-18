@@ -9,6 +9,12 @@ export interface ParsedCron {
     years: ParsedRule;
 }
 
+const parseIntMinMax = (str: string, min: number, max: number): number => {
+    const num = parseInt(str, 10);
+    if (num < min || num > max) throw new Error(`Invalid: number ${num} is not between ${min} and ${max}`);
+    return num;
+};
+
 const parseOneRule = (rule: string, min: number, max: number): ParsedRule => {
     if (rule === '?') {
         return [];
@@ -17,16 +23,16 @@ const parseOneRule = (rule: string, min: number, max: number): ParsedRule => {
         return ['L', 0];
     }
     if (rule.startsWith('L-')) {
-        return ['L', parseInt(rule.substring(2), 10)];
+        return ['L', parseIntMinMax(rule.substring(2), min, max)];
     }
     if (rule.endsWith('L')) {
-        return ['L', parseInt(rule.substring(0, rule.length - 1), 10)];
+        return ['L', parseIntMinMax(rule.substring(0, rule.length - 1), min, max)];
     }
     if (rule.endsWith('W')) {
-        return ['W', parseInt(rule.substring(0, rule.length - 1), 10)];
+        return ['W', parseIntMinMax(rule.substring(0, rule.length - 1), min, max)];
     }
     if (rule.includes('#')) {
-        return ['#', parseInt(rule.split('#')[0], 10), parseInt(rule.split('#')[1], 10)];
+        return ['#', parseIntMinMax(rule.split('#')[0], min, max), parseIntMinMax(rule.split('#')[1], min, max)];
     }
 
     let newRule;
@@ -40,13 +46,13 @@ const parseOneRule = (rule: string, min: number, max: number): ParsedRule => {
             end = max;
         } else if (parts[0].includes('-')) {
             const splits = parts[0].split('-');
-            start = parseInt(splits[0], 10);
-            end = parseInt(splits[1], 10);
+            start = parseIntMinMax(splits[0], min, max);
+            end = parseIntMinMax(splits[1], min, max);
         } else {
-            start = parseInt(parts[0], 10);
+            start = parseIntMinMax(parts[0], min, max);
             end = max;
         }
-        const increment = parseInt(parts[1], 10);
+        const increment = parseIntMinMax(parts[1], 1, max);
         newRule = '';
         while (start <= end) {
             newRule += `,${start}`;
@@ -61,11 +67,11 @@ const parseOneRule = (rule: string, min: number, max: number): ParsedRule => {
     newRule.split(',').forEach((s) => {
         if (s.includes('-')) {
             const parts = s.split('-');
-            const start = parseInt(parts[0], 10);
-            const end = parseInt(parts[1], 10);
+            const start = parseIntMinMax(parts[0], min, max);
+            const end = parseIntMinMax(parts[1], min, max);
             for (let i = start; i <= end; i += 1) allows.push(i);
         } else {
-            allows.push(parseInt(s, 10));
+            allows.push(parseIntMinMax(s, min, max));
         }
     });
     return allows;
