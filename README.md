@@ -22,7 +22,7 @@ npm install aws-cron-parser
 There are only 3 methods: `parse`, `next`, and `prev`
 
 ```js
-import awsCronParser from "aws-cron-parser";
+import * as awsCronParser from "aws-cron-parser";
 
 // first we need to parse the cron expression
 const cron = awsCronParser.parse("9 * 7,9,11 5 ? 2020,2022,2024-2099");
